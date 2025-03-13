@@ -17,6 +17,8 @@ def input_error(func):
                 return 'For change contact, please, enter <change name old_phone new_phone>'
             elif func.__name__ == 'add_birthday':
                 return str(error)
+            elif func.__name__ == "show_birthday":
+                return str(error)
 
         except IndexError:
             if func.__name__ == 'show_phone':
@@ -30,6 +32,8 @@ def input_error(func):
             elif func.__name__ == 'show_phone':
                 return str(error)
             elif func.__name__ == 'add_birthday':
+                return str(error)
+            elif func.__name__ == 'show_birthday':
                 return str(error)
 
     return inner
@@ -105,3 +109,23 @@ def add_birthday(args: list, book: dict):
 
     if record is None:
         raise KeyError(f'No contact with name {name.title()}.')
+
+
+@input_error
+def show_birthday(args: list, book: dict):
+
+    name = args[0]
+    record = book.find(name)
+
+    if record is None:
+        raise KeyError(f'No contact with name {name.title()}.')
+
+    if record.birthday is not None:
+        return f"{name.title()}'s birthday: {record.birthday.value.strftime('%d.%m.%Y')}"
+    else:
+        raise ValueError(f"{name.title()}'s birthday not added")
+
+
+def birthdays(book: dict):
+
+    return book.get_congrats()

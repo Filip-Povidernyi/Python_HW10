@@ -1,6 +1,6 @@
 from pathlib import Path
 import pickle
-from handler import command_parser, add_contact, show_phone, show_all, change_contact, add_birthday
+from handler import command_parser, add_contact, show_phone, show_all, change_contact, add_birthday, show_birthday, birthdays
 from CLI_bot_class import AddressBook
 
 
@@ -41,6 +41,16 @@ def main():
 
             case "add-birthday":
                 print(add_birthday(args, book))
+
+            case "show-birthday":
+                print(show_birthday(args, book))
+
+            case "birthdays":
+                if isinstance(birthdays(book), list):
+                    print(f"Список привітань на цьому тижні:\n" +
+                          "\n".join(str(birthday) for birthday in birthdays(book)))
+                else:
+                    print(birthdays(book))
 
             case "exit":
                 with open('contacts.pkl', 'wb') as file:

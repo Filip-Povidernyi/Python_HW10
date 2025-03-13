@@ -126,47 +126,21 @@ class AddressBook(UserDict):
                     date_in_string = birthday_date_this_year.strftime(
                         "%d.%m.%Y")
                     message_dict.update(
-                        {'name': key, 'congratulation_date': date_in_string})
+                        {'name': key.title(), 'congratulation_date': date_in_string})
                     upcoming_birthdays_list.append(message_dict)
 
                 else:
 
                     message_dict = {}
+                    date_in_string_act = birthday_date_this_year.strftime(
+                        "%d.%m.%Y")
                     date_in_string = (birthday_date_this_year + timedelta(
                         days=(7 - birthday_date_this_year.weekday()))).strftime("%d.%m.%Y")
                     message_dict.update(
-                        {'name': key, 'congratulation_date': date_in_string})
+                        {'name': key.title(), 'congratulation_date': date_in_string, 'was': date_in_string_act})
                     upcoming_birthdays_list.append(message_dict)
 
-        return upcoming_birthdays_list
-
-
-# if __name__ == '__main__':
-
-#     book = AddressBook()
-
-#     rec1 = Record("Kolya")
-#     rec1.add_phone('0666985192')
-#     rec1.add_phone('0676466593')
-#     rec1.add_birthday('13.03.1984')
-
-#     book.add_record(rec1)
-
-#     john_record = Record("John")
-#     john_record.add_phone("1234567890")
-#     john_record.add_phone("5555555555")
-#     john_record.add_birthday("15.3.1989")
-
-#     # Додавання запису John до адресної книги
-#     book.add_record(john_record)
-
-#     # Створення та додавання нового запису для Jane
-#     jane_record = Record("Jane")
-#     jane_record.add_phone("9876543210")
-#     book.add_record(jane_record)
-
-#     # Виведення всіх записів у книзі
-#     for name, record in book.data.items():
-#         print(record)
-
-#     print(book.get_congrats())
+        if upcoming_birthdays_list:
+            return upcoming_birthdays_list
+        else:
+            return "No birthdays on this week"
