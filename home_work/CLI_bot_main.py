@@ -1,7 +1,7 @@
+from address_book import AddressBook
+from handler import command_parser, add_contact, show_phone, show_all, change_contact, add_birthday, show_birthday, birthdays, del_phone
 from pathlib import Path
 import pickle
-from handler import command_parser, add_contact, show_phone, show_all, change_contact, add_birthday, show_birthday, birthdays
-from CLI_bot_class import AddressBook
 
 
 def main():
@@ -35,6 +35,9 @@ def main():
 
             case "phone":
                 print(show_phone(args, book))
+
+            case "del-phone":
+                print(del_phone(args, book))
 
             case "all":
                 show_all(book)
