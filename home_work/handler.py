@@ -1,6 +1,6 @@
 from functools import wraps
 
-from CLI_bot_class import Record
+from record import Record
 
 
 def input_error(func):
@@ -19,10 +19,14 @@ def input_error(func):
                 return str(error)
             elif func.__name__ == "show_birthday":
                 return str(error)
+            elif func.__name__ == 'del_phone':
+                return 'For remove phone number, please, enter <del-phone name phone>'
 
-        except IndexError:
+        except IndexError as error:
             if func.__name__ == 'show_phone':
                 return 'For get phone number, please, enter <phone name>'
+            elif func.__name__ == 'del_phone':
+                return str(error)
 
         except KeyError as error:
             if func.__name__ == 'add_contact':
@@ -87,6 +91,21 @@ def show_phone(args: list, book: dict):
 
     else:
         raise KeyError(f'No contact with name {name.title()}.')
+
+
+@input_error
+def del_phone(args: list, book: dict):
+
+    name, phone = args
+    record = book.find(name)
+
+    if phone in [p.value for p in record.phones]:
+
+        record.remove_phone(phone)
+        return f"Phone {phone} removed!"
+
+    else:
+        raise IndexError("Number is ubsent in contact")
 
 
 def show_all(book: dict):
